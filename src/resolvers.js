@@ -1,11 +1,13 @@
-export const resolvers = {
+export const resolvers = spotifyApi => ({
   Query: {
-    car: (root, { plateNumber }, { dataSources }) =>
-      dataSources.mvrpAPI.getACar(plateNumber),
-    cars: (root, args, { dataSources }) => dataSources.mvrpAPI.getAllCars()
-  },
-  Car: {
-    vehicleStatus: ({ status }) => status,
-    yearOfManufacture: ({ productionYear }) => productionYear
+    me: async () => {
+      const { body } = await spotifyApi.getMe();
+      const profile = {
+        id: body.id,
+        email: body.email,
+        display_name: body.display_name
+      };
+      return profile;
+    }
   }
-};
+});
