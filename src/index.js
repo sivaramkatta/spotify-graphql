@@ -1,20 +1,17 @@
 import { ApolloServer } from "apollo-server";
 import { typeDefs } from "./schema";
 import { resolvers } from "./resolvers";
-import SpotifyWebApi from "spotify-web-api-node";
-
-const spotifyApi = new SpotifyWebApi();
+import { SpotifyRestDataSource } from "./datasource";
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers: resolvers(spotifyApi),
+  resolvers,
+  dataSources: () => ({ spotify: new SpotifyRestDataSource() }),
   context: ({ req }) => {
     if (req.headers.authorization) {
-      spotifyApi.setAccessToken(req.headers.authorization);
-    } else {
-      throw Error("Authorization token is mandatory");
+      return { token: req.headers.authorization };
     }
-    return null;
+    throw Error("Authorization token is mandatory");
   }
 });
 
