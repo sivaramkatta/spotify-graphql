@@ -1,7 +1,9 @@
 export const resolvers = {
   Query: {
-    me: (parent, args, { dataSources }) => {
-      return dataSources.spotify.getMe();
-    }
+    me: (_, __, { dataSources }) => dataSources.spotify.getMe()
+  },
+  User: {
+    follower_count: parent => parent.followers.total,
+    account_type: parent => parent.product
   }
 };
