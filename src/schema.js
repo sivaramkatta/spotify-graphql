@@ -2,9 +2,11 @@ import { gql } from "apollo-server";
 
 export const typeDefs = gql`
   type Query {
-    me: User
+    me: PrivateUser
+    user(id: String): PublicUser
   }
-  type User {
+
+  type PrivateUser {
     id: String
     email: String
     display_name: String
@@ -13,7 +15,20 @@ export const typeDefs = gql`
     account_type: String
     follower_count: Int
     images: [Image]
+    uri: String
+    href: String
   }
+
+  type PublicUser {
+    id: String
+    display_name: String
+    follower_count: Int
+    images: [Image]
+    uri: String
+    href: String
+    type: String
+  }
+
   type Image {
     height: Int
     width: Int

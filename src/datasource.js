@@ -13,4 +13,8 @@ export class SpotifyRestDataSource extends RESTDataSource {
   async getMe() {
     return this.get(`me`);
   }
+
+  async getUser(id) {
+    return this.get(`users/${id}`);
+  }
 }
