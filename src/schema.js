@@ -1,22 +1,14 @@
 import { gql } from "apollo-server";
 
 export const typeDefs = gql`
-  type Query {
-    me: PrivateUser
-    user(id: String): PublicUser
-  }
-
   type PrivateUser {
     id: String
     email: String
     display_name: String
     country: String
-    type: String
     account_type: String
     follower_count: Int
     images: [Image]
-    uri: String
-    href: String
   }
 
   type PublicUser {
@@ -24,14 +16,45 @@ export const typeDefs = gql`
     display_name: String
     follower_count: Int
     images: [Image]
-    uri: String
-    href: String
-    type: String
+  }
+
+  type Album {
+    id: String
+    album_type: String
+    artists: [SimplifiedArtist]
+    available_markets: [String]
+    genres: [String]
+    images: [Image]
+    label: String
+    name: String
+    popularity: Int
+    release_date: String
+    tracks: SimplifiedTrack
+  }
+
+  type SimplifiedArtist {
+    id: String
+    name: String
+  }
+
+  type SimplifiedTrack {
+    artists: [SimplifiedArtist]
+    available_markets: [String]
+    duration_ms: Int
+    id: String
+    name: String
+    preview_url: String
   }
 
   type Image {
     height: Int
     width: Int
     url: String
+  }
+
+  type Query {
+    me: PrivateUser
+    user(id: String!): PublicUser
+    getMultipleAlbums(ids: [String!]!, market: String): [Album]
   }
 `;

@@ -17,4 +17,16 @@ export class SpotifyRestDataSource extends RESTDataSource {
   async getUser(id) {
     return this.get(`users/${id}`);
   }
+
+  async getMultipleAlbums(ids, market) {
+    let url = "albums?";
+    if (ids) {
+      url += `ids=${ids.join(",")}`;
+    }
+    if (market) {
+      url += `market=${market}`;
+    }
+    const data = await this.get(url);
+    return data["albums"];
+  }
 }
