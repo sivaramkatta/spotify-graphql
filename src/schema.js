@@ -52,9 +52,13 @@ export const typeDefs = gql`
     url: String
   }
 
+  directive @source(name: String) on FIELD_DEFINITION
+
   type Query {
-    me: PrivateUser
-    user(id: String!): PublicUser
+    me: PrivateUser @source(name: "getMe")
+    user(id: String!): PublicUser @source(name: "getUser")
     getMultipleAlbums(ids: [String!]!, market: String): [Album]
+      @source(name: "getMultipleAlbums")
+    getAlbum(id: ID!): Album @source(name: "getAlbum")
   }
 `;

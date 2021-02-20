@@ -6,27 +6,40 @@ export class SpotifyRestDataSource extends RESTDataSource {
     this.baseURL = "https://api.spotify.com/v1/";
   }
 
+  buildQueryStrng(args) {
+    let string = "";
+    for (let key in args) {
+      if (!string) {
+        string += `?${key}=${args[key]}`;
+      } else {
+        string += `&${key}=${args[key]}`;
+      }
+    }
+    return string;
+  }
+
   willSendRequest(request) {
     request.headers.set("Authorization", this.context.token);
   }
 
   async getMe() {
-    return this.get(`me`);
+    return await this.get(`me`);
   }
 
-  async getUser(id) {
-    return this.get(`users/${id}`);
+  async getUser({ id }) {
+    return await this.get(`users/${id}`);
   }
 
-  async getMultipleAlbums(ids, market) {
-    let url = "albums?";
-    if (ids) {
-      url += `ids=${ids.join(",")}`;
-    }
-    if (market) {
-      url += `market=${market}`;
-    }
-    const data = await this.get(url);
+  async getMultipleAlbums(args) {
+    const queryString = this.buildQueryStrng({
+      ...args,
+      ids: args.ids.join(",")
+    });
+    const data = await this.get(`albums/${queryString}`);
     return data["albums"];
+  }
+
+  async getAlbum({ id }) {
+    return await this.get(`albums/${id}`);
   }
 }
