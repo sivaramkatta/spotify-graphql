@@ -42,4 +42,13 @@ export class SpotifyRestDataSource extends RESTDataSource {
   async getAlbum({ id }) {
     return await this.get(`albums/${id}`);
   }
+
+  async getAlbumTracks(args) {
+    const {
+      payload: { id, ...otherArgs }
+    } = args;
+    const queryString = this.buildQueryStrng(otherArgs);
+    const data = await this.get(`albums/${id}/tracks/${queryString}`);
+    return data["items"];
+  }
 }

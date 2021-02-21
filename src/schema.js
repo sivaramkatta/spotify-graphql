@@ -32,9 +32,30 @@ export const typeDefs = gql`
     tracks: SimplifiedTrack
   }
 
+  type SimplifiedAlbum {
+    album_type: String
+    artists: [SimplifiedArtist]
+    available_markets: [String]
+    id: String
+    images: [Image]
+    name: String
+    release_date: String
+  }
+
   type SimplifiedArtist {
     id: String
     name: String
+  }
+
+  type Track {
+    album: [SimplifiedAlbum]
+    artisis: [SimplifiedArtist]
+    available_markets: [String]
+    duration_ms: Int
+    id: String
+    name: String
+    popularity: String
+    preview_url: String
   }
 
   type SimplifiedTrack {
@@ -52,13 +73,22 @@ export const typeDefs = gql`
     url: String
   }
 
+  input AlbumTrackInput {
+    id: ID!
+    market: String
+    limit: Int
+    offset: Int
+  }
+
   directive @source(name: String) on FIELD_DEFINITION
 
   type Query {
-    me: PrivateUser @source(name: "getMe")
-    user(id: String!): PublicUser @source(name: "getUser")
+    getMe: PrivateUser @source(name: "getMe")
+    getUser(id: String!): PublicUser @source(name: "getUser")
     getMultipleAlbums(ids: [String!]!, market: String): [Album]
       @source(name: "getMultipleAlbums")
     getAlbum(id: ID!): Album @source(name: "getAlbum")
+    getAlbumTracks(payload: AlbumTrackInput): [Track]
+      @source(name: "getAlbumTracks")
   }
 `;
