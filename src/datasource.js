@@ -9,10 +9,12 @@ export class SpotifyRestDataSource extends RESTDataSource {
   buildQueryStrng(args) {
     let string = "";
     for (let key in args) {
-      if (!string) {
-        string += `?${key}=${args[key]}`;
-      } else {
-        string += `&${key}=${args[key]}`;
+      if (args[key]) {
+        if (!string) {
+          string += `?${key}=${args[key]}`;
+        } else {
+          string += `&${key}=${args[key]}`;
+        }
       }
     }
     return string;
@@ -49,6 +51,43 @@ export class SpotifyRestDataSource extends RESTDataSource {
     } = args;
     const queryString = this.buildQueryStrng(otherArgs);
     const data = await this.get(`albums/${id}/tracks/${queryString}`);
+    return data["items"];
+  }
+
+  async getMultipleArtists(args) {
+    const queryString = this.buildQueryStrng({
+      ...args,
+      ids: args.ids.join(",")
+    });
+    const data = await this.get(`artists/${queryString}`);
+    return data["artists"];
+  }
+
+  async getArtist({ id }) {
+    return await this.get(`artists/${id}`);
+  }
+
+  async getArtistTopTracks(args) {
+    const { id, ...otherArgs } = args;
+    const queryString = this.buildQueryStrng(otherArgs);
+    const data = await this.get(`artists/${id}/top-tracks/${queryString}`);
+    return data["tracks"];
+  }
+
+  async getArtistRelatedArtists({ id }) {
+    const data = await this.get(`artists/${id}/related-artists`);
+    return data["artists"];
+  }
+
+  async getArtistAlbums(args) {
+    const {
+      payload: { id, ...otherArgs }
+    } = args;
+    const queryString = this.buildQueryStrng({
+      ...otherArgs,
+      include_groups: otherArgs?.include_groups?.join(",")
+    });
+    const data = await this.get(`artists/${id}/albums/${queryString}`);
     return data["items"];
   }
 }

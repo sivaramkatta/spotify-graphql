@@ -42,6 +42,15 @@ export const typeDefs = gql`
     release_date: String
   }
 
+  type Artist {
+    follower_count: Int
+    genres: [String]
+    id: String
+    images: [Image]
+    name: String
+    popularity: Int
+  }
+
   type SimplifiedArtist {
     id: String
     name: String
@@ -80,6 +89,21 @@ export const typeDefs = gql`
     offset: Int
   }
 
+  enum IncludeGroups {
+    ALBUM
+    SINGLE
+    APPEARS_ON
+    COMPILATION
+  }
+
+  input ArtistAlbums {
+    id: ID!
+    include_groups: [IncludeGroups]
+    market: String
+    limit: Int
+    offset: Int
+  }
+
   directive @source(name: String) on FIELD_DEFINITION
 
   type Query {
@@ -90,5 +114,14 @@ export const typeDefs = gql`
     getAlbum(id: ID!): Album @source(name: "getAlbum")
     getAlbumTracks(payload: AlbumTrackInput): [Track]
       @source(name: "getAlbumTracks")
+    getMultipleArtists(ids: [String!]!): [Artist]
+      @source(name: "getMultipleArtists")
+    getArtist(id: String!): Artist @source(name: "getArtist")
+    getArtistTopTracks(id: String!, market: String!): [Track]
+      @source(name: "getArtistTopTracks")
+    getArtistRelatedArtists(id: ID!): [Artist]
+      @source(name: "getArtistRelatedArtists")
+    getArtistAlbums(payload: ArtistAlbums): [Album]
+      @source(name: "getArtistAlbums")
   }
 `;
