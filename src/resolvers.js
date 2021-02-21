@@ -10,5 +10,14 @@ export const resolvers = {
   },
   PublicUser: {
     follower_count: parent => parent.followers.total
+  },
+  Artist: {
+    follower_count: parent => parent.followers.total
+  },
+  IncludeGroups: {
+    ALBUM: "album",
+    SINGLE: "single",
+    APPEARS_ON: "appears_on",
+    COMPILATION: "compilation"
   }
 };
