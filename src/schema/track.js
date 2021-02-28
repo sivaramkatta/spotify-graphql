@@ -19,4 +19,14 @@ export const trackTypeDefs = gql`
     artists: [SimplifiedArtist]
     available_markets: [String]
   }
+
+  type TrackQueries {
+    getMultipleTracks(ids: [String!]!, market: String): [Track]
+      @source(name: "getMultipleTracks")
+    getTrack(id: ID!): Track @source(name: "getTrack")
+  }
+
+  extend type Query {
+    trackQueries: TrackQueries
+  }
 `;
