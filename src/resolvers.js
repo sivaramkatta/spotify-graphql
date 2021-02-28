@@ -1,6 +1,11 @@
-import { getCountryName } from "./country_codes";
+import { getCountryName } from "./utils/country_codes";
 
 export const resolvers = {
+  Query: {
+    userQueries: () => ({}),
+    albumQueries: () => ({}),
+    artistQueries: () => ({})
+  },
   PrivateUser: {
     country: parent => {
       return parent.country ? getCountryName(parent.country) : null;

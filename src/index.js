@@ -1,12 +1,24 @@
 import { ApolloServer } from "apollo-server";
-import { typeDefs } from "./schema";
+import {
+  albumTypeDefs,
+  userTypeDefs,
+  artistTypeDefs,
+  commonTypeDefs,
+  trackTypeDefs
+} from "./schema";
 import { resolvers } from "./resolvers";
-import { SpotifyRestDataSource } from "./datasource";
-import { RestDirective } from "./directives";
-import { tracksLoader } from "./dataloader";
+import { SpotifyRestDataSource } from "./utils/datasource";
+import { RestDirective } from "./utils/directives";
+import { tracksLoader } from "./utils/dataloader";
 
 const server = new ApolloServer({
-  typeDefs,
+  typeDefs: [
+    userTypeDefs,
+    albumTypeDefs,
+    artistTypeDefs,
+    trackTypeDefs,
+    commonTypeDefs
+  ],
   resolvers,
   dataSources: () => ({ spotify: new SpotifyRestDataSource() }),
   schemaDirectives: {
