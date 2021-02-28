@@ -14,6 +14,14 @@ export const resolvers = {
   Artist: {
     follower_count: parent => parent.followers.total
   },
+  Album: {
+    tracks: parent => parent.tracks.items
+  },
+  RecommendedAlbum: {
+    tracks: async (parent, __, { loaders: { tracksLoader } }) => {
+      return await tracksLoader.load(parent.id);
+    }
+  },
   IncludeGroups: {
     ALBUM: "album",
     SINGLE: "single",

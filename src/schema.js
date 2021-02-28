@@ -29,7 +29,23 @@ export const typeDefs = gql`
     name: String
     popularity: Int
     release_date: String
-    tracks: SimplifiedTrack
+    tracks: [SimplifiedTrack]
+    total_tracks: Int
+  }
+
+  type RecommendedAlbum {
+    id: String
+    album_type: String
+    artists: [SimplifiedArtist]
+    available_markets: [String]
+    genres: [String]
+    images: [Image]
+    label: String
+    name: String
+    popularity: Int
+    release_date: String
+    tracks: [SimplifiedTrack]
+    total_tracks: Int
   }
 
   type SimplifiedAlbum {
@@ -89,6 +105,12 @@ export const typeDefs = gql`
     offset: Int
   }
 
+  input GenericAlbumTrackInput {
+    country: String
+    limit: Int
+    offset: Int
+  }
+
   enum IncludeGroups {
     ALBUM
     SINGLE
@@ -123,5 +145,7 @@ export const typeDefs = gql`
       @source(name: "getArtistRelatedArtists")
     getArtistAlbums(payload: ArtistAlbums): [Album]
       @source(name: "getArtistAlbums")
+    getNewReleases(payload: GenericAlbumTrackInput): [RecommendedAlbum]
+      @source(name: "getNewReleases")
   }
 `;

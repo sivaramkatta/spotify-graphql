@@ -90,4 +90,13 @@ export class SpotifyRestDataSource extends RESTDataSource {
     const data = await this.get(`artists/${id}/albums/${queryString}`);
     return data["items"];
   }
+
+  async getNewReleases({ payload }) {
+    let queryString = "";
+    if (payload) {
+      queryString = this.buildQueryStrng(payload);
+    }
+    const data = await this.get(`browse/new-releases/${queryString}`);
+    return data["albums"]["items"];
+  }
 }
