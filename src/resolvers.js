@@ -28,10 +28,21 @@ export const resolvers = {
       return await tracksLoader.load(parent.id);
     }
   },
+  SearchResponse: {
+    artists: parent => parent?.artists?.items,
+    tracks: parent => parent?.tracks?.items,
+    albums: parent => parent?.albums?.items
+  },
   IncludeGroups: {
     ALBUM: "album",
     SINGLE: "single",
     APPEARS_ON: "appears_on",
     COMPILATION: "compilation"
+  },
+  SearchTypeEnum: {
+    ALBUM: "album",
+    ARTIST: "artist",
+    TRACK: "track",
+    PLAYLIST: "playlist"
   }
 };
