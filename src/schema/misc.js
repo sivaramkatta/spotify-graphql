@@ -67,6 +67,23 @@ export const commonTypeDefs = gql`
     albums: [Album]
   }
 
+  type SimplifiedPlaylist {
+    id: String
+    collaborative: Boolean
+    description: String
+    images: Image
+    name: String
+    owner: PublicUser
+    public: Boolean
+    total_tracks: Int
+  }
+
+  type FeaturedPlaylistResponse {
+    message: String
+    items: [SimplifiedPlaylist]
+    total_items: Int
+  }
+
   union PersonalizedResponse = SimplifiedTrack | SimplifiedArtist
 
   directive @source(name: String) on FIELD_DEFINITION
@@ -77,5 +94,7 @@ export const commonTypeDefs = gql`
     getPersonalizedData(payload: PersonalizationInput): [PersonalizedResponse]
       @source(name: "getPersonalizedData")
     search(payload: searchInput): SearchResponse @source(name: "search")
+    getFeaturedPlaylists(limit: Int, offset: Int): FeaturedPlaylistResponse
+      @source(name: "getFeaturedPlaylists")
   }
 `;

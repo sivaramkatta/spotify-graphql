@@ -133,4 +133,8 @@ export class SpotifyRestDataSource extends RESTDataSource {
     const data = await this.get(`me/top/${type}/${queryString}`);
     return data.items;
   }
+
+  async getFeaturedPlaylists() {
+    return await this.get("browse/featured-playlists");
+  }
 }
