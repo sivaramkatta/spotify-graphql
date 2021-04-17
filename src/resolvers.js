@@ -5,8 +5,7 @@ export const resolvers = {
     userQueries: () => ({}),
     albumQueries: () => ({}),
     artistQueries: () => ({}),
-    trackQueries: () => ({}),
-    personalizationQueries: () => ({})
+    trackQueries: () => ({})
   },
   PrivateUser: {
     country: parent => {
