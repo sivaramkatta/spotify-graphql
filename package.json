@@ -2,10 +2,10 @@
   "name": "spotify-graphql",
   "version": "1.0.0",
   "description": "Graphql layer on top of spotifys rest api using node",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "build": "babel src -d dist",
-    "start": "npm run build && node dist",
+    "start": "npm run build && node dist/server",
     "restart": "rm -rf dist && npm run start",
     "dev": "nodemon --exec npm run restart"
   },
@@ -26,6 +26,7 @@
   "dependencies": {
     "apollo-datasource-rest": "^0.10.0",
     "apollo-server": "^2.21.0",
+    "dataloader": "^2.0.0",
     "graphql": "^15.5.0"
   }
 }

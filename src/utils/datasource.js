@@ -90,4 +90,47 @@ export class SpotifyRestDataSource extends RESTDataSource {
     const data = await this.get(`artists/${id}/albums/${queryString}`);
     return data["items"];
   }
+
+  async getNewReleases({ payload }) {
+    let queryString = "";
+    if (payload) {
+      queryString = this.buildQueryStrng(payload);
+    }
+    const data = await this.get(`browse/new-releases/${queryString}`);
+    return data["albums"]["items"];
+  }
+
+  async getMultipleTracks(args) {
+    const queryString = this.buildQueryStrng({
+      ...args,
+      ids: args.ids.join(",")
+    });
+    const data = await this.get(`tracks/${queryString}`);
+    return data["tracks"];
+  }
+
+  async getTrack({ id }) {
+    return await this.get(`tracks/${id}`);
+  }
+
+  async search(args) {
+    const {
+      payload: { search_term: q, type, ...otherArgs }
+    } = args;
+    const queryString = this.buildQueryStrng({
+      ...otherArgs,
+      type: type.join(","),
+      q: q.split(" ").join("+")
+    });
+    return await this.get(`search/${queryString}`);
+  }
+
+  async getPersonalizedData(args) {
+    const {
+      payload: { type, ...otherArgs }
+    } = args;
+    const queryString = this.buildQueryStrng(otherArgs);
+    const data = await this.get(`me/top/${type}/${queryString}`);
+    return data.items;
+  }
 }
