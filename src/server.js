@@ -5,7 +5,8 @@ import {
   artistTypeDefs,
   commonTypeDefs,
   trackTypeDefs,
-  searchTypeDefs
+  searchTypeDefs,
+  personalizationTypeDefs
 } from "./schema";
 import { resolvers } from "./resolvers";
 import { SpotifyRestDataSource } from "./utils/datasource";
@@ -19,7 +20,8 @@ const server = new ApolloServer({
     artistTypeDefs,
     trackTypeDefs,
     searchTypeDefs,
-    commonTypeDefs
+    commonTypeDefs,
+    personalizationTypeDefs
   ],
   resolvers,
   dataSources: () => ({ spotify: new SpotifyRestDataSource() }),

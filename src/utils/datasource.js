@@ -124,4 +124,13 @@ export class SpotifyRestDataSource extends RESTDataSource {
     });
     return await this.get(`search/${queryString}`);
   }
+
+  async getPersonalizedData(args) {
+    const {
+      payload: { type, ...otherArgs }
+    } = args;
+    const queryString = this.buildQueryStrng(otherArgs);
+    const data = await this.get(`me/top/${type}/${queryString}`);
+    return data.items;
+  }
 }

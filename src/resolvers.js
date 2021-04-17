@@ -5,7 +5,8 @@ export const resolvers = {
     userQueries: () => ({}),
     albumQueries: () => ({}),
     artistQueries: () => ({}),
-    trackQueries: () => ({})
+    trackQueries: () => ({}),
+    personalizationQueries: () => ({})
   },
   PrivateUser: {
     country: parent => {
@@ -28,6 +29,17 @@ export const resolvers = {
       return await tracksLoader.load(parent.id);
     }
   },
+  PersonalizedResponse: {
+    __resolveType(obj) {
+      if (obj.type === "track") {
+        return "SimplifiedTrack";
+      }
+      if (obj.type === "artist") {
+        return "SimplifiedArtist";
+      }
+      return null;
+    }
+  },
   SearchResponse: {
     artists: parent => parent?.artists?.items,
     tracks: parent => parent?.tracks?.items,
@@ -44,5 +56,14 @@ export const resolvers = {
     ARTIST: "artist",
     TRACK: "track",
     PLAYLIST: "playlist"
+  },
+  PersonalizationType: {
+    ARTISTS: "artists",
+    TRACKS: "tracks"
+  },
+  TimeRange: {
+    SHORT: "short_term",
+    MEDIUM: "medium_term",
+    LONG: "long_term"
   }
 };
