@@ -159,4 +159,9 @@ export class SpotifyRestDataSource extends RESTDataSource {
     );
     return data?.playlists;
   }
+
+  async getRecommendedGenres() {
+    const data = await this.get("recommendations/available-genre-seeds");
+    return data?.genres;
+  }
 }
