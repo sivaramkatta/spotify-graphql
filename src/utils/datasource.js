@@ -134,7 +134,29 @@ export class SpotifyRestDataSource extends RESTDataSource {
     return data.items;
   }
 
-  async getFeaturedPlaylists() {
-    return await this.get("browse/featured-playlists");
+  async getFeaturedPlaylists(args) {
+    const queryString = this.buildQueryStrng(args);
+    return await this.get(`browse/featured-playlists/${queryString}`);
+  }
+
+  async getAllCategories(args) {
+    const queryString = this.buildQueryStrng(args);
+    const data = await this.get(`browse/categories${queryString}`);
+    return data?.categories;
+  }
+
+  async getCategory({ id }) {
+    return await this.get(`browse/categories/${id}`);
+  }
+
+  async getcategoriesPlaylists(args) {
+    const {
+      payload: { category_id, ...otherArgs }
+    } = args;
+    const queryString = this.buildQueryStrng(otherArgs);
+    const data = await this.get(
+      `browse/categories/${category_id}/playlists/${queryString}`
+    );
+    return data?.playlists;
   }
 }

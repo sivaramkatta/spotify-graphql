@@ -84,6 +84,28 @@ export const commonTypeDefs = gql`
     total_items: Int
   }
 
+  type Category {
+    id: String
+    icons: [Image]
+    name: String
+  }
+
+  type CategoriesResponse {
+    total: Int
+    items: [Category]
+  }
+
+  type CategoriesPlaylistResponse {
+    items: [SimplifiedPlaylist]
+    total: Int
+  }
+
+  input CategoriesPlaylistInput {
+    category_id: String
+    limit: Int
+    offset: Int
+  }
+
   union PersonalizedResponse = SimplifiedTrack | SimplifiedArtist
 
   directive @source(name: String) on FIELD_DEFINITION
@@ -96,5 +118,11 @@ export const commonTypeDefs = gql`
     search(payload: searchInput): SearchResponse @source(name: "search")
     getFeaturedPlaylists(limit: Int, offset: Int): FeaturedPlaylistResponse
       @source(name: "getFeaturedPlaylists")
+    getAllCategories(limit: Int, offset: Int): CategoriesResponse
+      @source(name: "getAllCategories")
+    getCategory(id: String!): Category @source(name: "getCategory")
+    getcategoriesPlaylists(
+      payload: CategoriesPlaylistInput
+    ): CategoriesPlaylistResponse @source(name: "getcategoriesPlaylists")
   }
 `;
