@@ -6,3 +6,5 @@ Refer spotify documentation: https://developer.spotify.com/documentation/web-api
 - clone the repo
 - ```npm install```
 - For dev server run ```npm run dev``` and for prod build run ```npm run build```
+
+NOTE: Feel free to contribute to repo.
