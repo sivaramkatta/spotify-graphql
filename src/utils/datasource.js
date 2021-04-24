@@ -133,4 +133,73 @@ export class SpotifyRestDataSource extends RESTDataSource {
     const data = await this.get(`me/top/${type}/${queryString}`);
     return data.items;
   }
+
+  async getFeaturedPlaylists(args) {
+    const queryString = this.buildQueryStrng(args);
+    return await this.get(`browse/featured-playlists/${queryString}`);
+  }
+
+  async getAllCategories(args) {
+    const queryString = this.buildQueryStrng(args);
+    const data = await this.get(`browse/categories${queryString}`);
+    return data?.categories;
+  }
+
+  async getCategory({ id }) {
+    return await this.get(`browse/categories/${id}`);
+  }
+
+  async getcategoriesPlaylists(args) {
+    const {
+      payload: { category_id, ...otherArgs }
+    } = args;
+    const queryString = this.buildQueryStrng(otherArgs);
+    const data = await this.get(
+      `browse/categories/${category_id}/playlists/${queryString}`
+    );
+    return data?.playlists;
+  }
+
+  async getRecommendedGenres() {
+    const data = await this.get("recommendations/available-genre-seeds");
+    return data?.genres;
+  }
+
+  async followPlaylist({ playlist_id, public: public_playlist = false }) {
+    await this.put(`playlists/${playlist_id}/followers`, {
+      public: public_playlist
+    });
+    return true;
+  }
+
+  async unfollowPlaylist({ playlist_id }) {
+    await this.delete(`playlists/${playlist_id}/followers`);
+    return true;
+  }
+
+  async checkPlaylistFollowers({ users, playlist_id }) {
+    const ids = users.join(",");
+    const data = await this.get(
+      `playlists/${playlist_id}/followers/contains/?ids=${ids}`
+    );
+    return users.map((id, index) => ({ user_id: id, follows: data[index] }));
+  }
+
+  async getFollowersArtists(args) {
+    args.type = "artist";
+    const queryString = this.buildQueryStrng(args);
+    const data = await this.get(`me/following/${queryString}`);
+    return data?.artists?.items;
+  }
+
+  async followActions({ payload: { id, type, action } }) {
+    const ids = id.join(",");
+    const queryString = this.buildQueryStrng({ ids, type });
+    if (action === "FOLLOW") {
+      await this.put(`me/following/${queryString}`);
+    } else if (action === "UNFOLLOW") {
+      await this.delete(`me/following/${queryString}`);
+    }
+    return true;
+  }
 }

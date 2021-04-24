@@ -39,6 +39,13 @@ export const resolvers = {
       return null;
     }
   },
+  FeaturedPlaylistResponse: {
+    total_items: parent => parent.playlists.total,
+    items: parent => parent.playlists.items
+  },
+  SimplifiedPlaylist: {
+    total_tracks: parent => parent?.tracks?.total
+  },
   SearchResponse: {
     artists: parent => parent?.artists?.items,
     tracks: parent => parent?.tracks?.items,
@@ -64,5 +71,9 @@ export const resolvers = {
     SHORT: "short_term",
     MEDIUM: "medium_term",
     LONG: "long_term"
+  },
+  FollowType: {
+    ARTIST: "artist",
+    USER: "user"
   }
 };
