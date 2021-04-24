@@ -71,5 +71,9 @@ export const resolvers = {
     SHORT: "short_term",
     MEDIUM: "medium_term",
     LONG: "long_term"
+  },
+  FollowType: {
+    ARTIST: "artist",
+    USER: "user"
   }
 };

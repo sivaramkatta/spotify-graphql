@@ -124,6 +124,5 @@ export const commonTypeDefs = gql`
     getcategoriesPlaylists(
       payload: CategoriesPlaylistInput
     ): CategoriesPlaylistResponse @source(name: "getcategoriesPlaylists")
-    getRecommendedGenres: [String] @source(name: "getRecommendedGenres")
   }
 `;
