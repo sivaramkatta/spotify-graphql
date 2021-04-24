@@ -164,4 +164,16 @@ export class SpotifyRestDataSource extends RESTDataSource {
     const data = await this.get("recommendations/available-genre-seeds");
     return data?.genres;
   }
+
+  async followPlaylist({ playlist_id, public: public_playlist = false }) {
+    await this.put(`playlists/${playlist_id}/followers`, {
+      public: public_playlist
+    });
+    return true;
+  }
+
+  async unfollowPlaylist({ playlist_id, public: public_playlist = false }) {
+    await this.delete(`playlists/${playlist_id}/followers`);
+    return true;
+  }
 }
