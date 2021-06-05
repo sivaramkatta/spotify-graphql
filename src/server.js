@@ -35,7 +35,8 @@ const server = new ApolloServer({
       };
     }
   },
-  playground: true
+  playground: true,
+  introspection: true
 });
 
 server.listen(process.env.PORT).then(({ url }) => {
