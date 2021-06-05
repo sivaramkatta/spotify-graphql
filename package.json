@@ -9,6 +9,9 @@
     "restart": "rm -rf dist && npm run start",
     "dev": "nodemon --exec npm run restart"
   },
+  "engines": {
+    "node": "12.16.1"
+  },
   "keywords": [
     "spotify",
     "graphql"
