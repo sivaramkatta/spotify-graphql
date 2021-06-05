@@ -1,6 +1,12 @@
 # spotify-graphql
 GraphQL layer on top of Spotify REST api's
 Refer spotify documentation: https://developer.spotify.com/documentation/web-api/reference/#reference-index
+
+## Production URL for graphql
+```
+https://spotify-gql.herokuapp.com/
+```
+
 ## Setup project locally
 - Install node 
 - clone the repo
