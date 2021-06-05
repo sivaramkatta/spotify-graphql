@@ -17,4 +17,7 @@ This repo contains queries and mutations for following api's
 - [x] Browse API
 - [x] Follow API
 
-NOTE: Feel free to contribute to repo.
+NOTE: 
+- All requests needs Oauth token with proper scopes permission for each request to get resources like below in headers
+  ```authorization: "Bearer <Oauth token>"```
+- Feel free to contribute to repo.
