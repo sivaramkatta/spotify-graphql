@@ -35,7 +35,8 @@ const server = new ApolloServer({
       };
     }
     throw Error("Authorization token is mandatory");
-  }
+  },
+  playground: true
 });
 
 server.listen(process.env.PORT).then(({ url }) => {
