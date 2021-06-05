@@ -34,7 +34,6 @@ const server = new ApolloServer({
         loaders: { tracksLoader: tracksLoader(token) }
       };
     }
-    throw Error("Authorization token is mandatory");
   },
   playground: true
 });
